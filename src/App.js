@@ -25,7 +25,7 @@ export default function App() {
         <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow />
         <Shoe />
         <Environment preset="city" />
-        <ContactShadows position={[0, -0.8, 0]} opacity={0.25} scale={10} blur={1.5} far={0.8} />
+        <ContactShadows position={[0, -0.8, 0]} opacity={0.5} scale={10} blur={1.5} far={0.8} />
         <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={false} enablePan={false} />
       </Canvas>
       <Picker />
@@ -121,93 +121,128 @@ function Shoe() {
 function Picker() {
   const snap = useSnapshot(state)
   return (
-    <div style={{ display: snap.current ? "block" : "none" }}>
-      <HexColorPicker className="picker" color={snap.items[snap.current]} onChange={(color) => (state.items[snap.current] = color)} />
-      <h1>{snap.current}</h1>
-      <div className="side-elements" style={{ top: "8rem" }}>
-        Seat_Main
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Seat_Main,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Seat_Main"))}></div>
+    <>
+      <h1>{snap.current ? snap.current.split('_').join(' ') :'Seat'}</h1>
+      <div style={{ display: snap.current ? "block" : "none" }}>
+        <HexColorPicker
+          className="picker"
+          color={snap.items[snap.current]}
+          onChange={(color) => (state.items[snap.current] = color)}
+        />
+
+        <div className="side-elements" style={{ top: "8rem" }}>
+          Seat Main
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Seat_Main,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Seat_Main")
+            )}
+          ></div>
+        </div>
+        <div className="side-elements" style={{ top: "12rem" }}>
+          Seat Mid Design
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Seat_Mid_Design,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Seat_Mid_Design")
+            )}
+          ></div>
+        </div>
+        <div className="side-elements" style={{ top: "16rem" }}>
+          Seat Side
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Seat_Side,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Seat_Side")
+            )}
+          ></div>
+        </div>
+        <div className="side-elements" style={{ top: "20rem" }}>
+          Stritch Back
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Stritch_Back,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Stritch_Back")
+            )}
+          ></div>
+        </div>
+        <div className="side-elements" style={{ top: "24rem" }}>
+          Stritch Mid Main
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Stritch_Mid_Main,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Stritch_Mid_Main")
+            )}
+          ></div>
+        </div>
+        <div className="side-elements" style={{ top: "28rem" }}>
+          Stritch front
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Stritch_front,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Stritch_front")
+            )}
+          ></div>
+        </div>
+        <div className="side-elements" style={{ top: "32rem" }}>
+          Stritch mid design
+          <div
+            style={{
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "0.6rem",
+              cursor: "pointer",
+              boxShadow: "1px 2px 3px #000000",
+              backgroundColor: snap.items.Stritch_mid_design,
+            }}
+            onClick={(e) => (
+              e.stopPropagation(), (state.current = "Stritch_mid_design")
+            )}
+          ></div>
+        </div>
       </div>
-      <div className="side-elements" style={{ top: "12rem" }}>
-        Seat_Mid_Design
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Seat_Mid_Design,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Seat_Mid_Design"))}></div>
-      </div>
-      <div className="side-elements" style={{ top: "16rem" }}>
-        Seat_Side
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Seat_Side,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Seat_Side"))}></div>
-      </div>
-      <div className="side-elements" style={{ top: "20rem" }}>
-        Stritch_Back
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Stritch_Back,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Stritch_Back"))}></div>
-      </div>
-      <div className="side-elements" style={{ top: "24rem" }}>
-        Stritch_Mid_Main
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Stritch_Mid_Main,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Stritch_Mid_Main"))}></div>
-      </div>
-      <div className="side-elements" style={{ top: "28rem" }}>
-        Stritch_front
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Stritch_front,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Stritch_front"))}></div>
-      </div>
-      <div className="side-elements" style={{ top: "32rem" }}>
-        Stritch_mid_design
-        <div
-          style={{
-            width: "3rem",
-            height: "3rem",
-            borderRadius: "0.6rem",
-            cursor: "pointer",
-            backgroundColor: snap.items.Stritch_mid_design,
-          }}
-          onClick={(e) => (e.stopPropagation(), (state.current = "Stritch_mid_design"))}></div>
-      </div>
-    </div>
-  )
+    </>
+  );
 }
