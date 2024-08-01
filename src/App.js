@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import { useGLTF, ContactShadows, Environment, OrbitControls } from "@react-three/drei"
 import { HexColorPicker } from "react-colorful"
 import { proxy, useSnapshot } from "valtio"
+import { Color } from "three"
 
 const state = proxy({
   current: null,
@@ -10,40 +11,59 @@ const state = proxy({
     Seat_Main: "#171717",
     Seat_Side: "#ff5b00",
     Seat_Mid_Design: "#0552b5",
-    Stritch_front: "#e78704",
-    Stritch_Back: "#e78000",
+    Stritch_front: "#c3e7d1",
+    Stritch_Back: "#e70042",
     Stritch_Mid_Main: "#e3e7d0",
     Stritch_mid_design: "#3f8fe7",
   },
-})
+});
 
 export default function App() {
   return (
     <>
       <Canvas shadows camera={{ position: [0, 0, 4], fov: 45 }}>
         <ambientLight intensity={0.7} />
-        <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow />
+        <spotLight
+          intensity={0.5}
+          angle={0.1}
+          penumbra={1}
+          position={[10, 15, 10]}
+          castShadow
+        />
         <Shoe />
         <Environment preset="city" />
-        <ContactShadows position={[0, -0.8, 0]} opacity={0.5} scale={10} blur={1.5} far={0.8} />
-        <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={false} enablePan={false} />
+        <ContactShadows
+          position={[0, -0.8, 0]}
+          opacity={0.5}
+          scale={10}
+          blur={1.5}
+          far={0.8}
+        />
+        <OrbitControls
+          // minPolarAngle={Math.PI / 2}
+          // maxPolarAngle={Math.PI / 2}
+          minDistance={2}
+          maxDistance={6}
+        />
       </Canvas>
       <Picker />
     </>
-  )
+  );
 }
 
 function Shoe() {
   const ref = useRef()
   const snap = useSnapshot(state)
-  const { nodes, materials } = useGLTF("Vendetta.glb")
+  const { nodes, materials } = useGLTF("Vendetta_V4.glb");
+
+  // let value = new Color(materials.Stritch_mid_design.color).getHexString();
 
   const [hovered, set] = useState(null)
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
     // ref.current.rotation.set(Math.cos(t / 4) / 8 + 0.8, Math.sin(t / 4) / 8 + 0.3, -0.2 - (1 + Math.sin(t / 1.5)) / 20 - 0.2)
-    ref.current.position.y = (1 + Math.sin(t / 1.5)) / 10
+    // ref.current.position.y = (1 + Math.sin(t / 1.5)) / 10
   })
 
   useEffect(() => {
@@ -59,63 +79,67 @@ function Shoe() {
     <group
       ref={ref}
       scale={0.5}
-      rotation={[0.9, 0.8, -0.2]}
+      position={[0, 0, -1]}
+      rotation={[0, 0, 0]}
       onPointerOver={(e) => (e.stopPropagation(), set(e.object.material.name))}
       onPointerOut={(e) => e.intersections.length === 0 && set(null)}
       onPointerMissed={() => (state.current = null)}
-      onClick={(e) => (e.stopPropagation(), (state.current = e.object.material.name))}>
+      onClick={(e) => (
+        e.stopPropagation(), (state.current = e.object.material.name)
+      )}
+    >
       <mesh
         receiveShadow
         castShadow
-        geometry={nodes.mesh002.geometry}
-        material={materials.Seat_Main}
-        material-color={snap.items.Seat_Main}
-      />
-      <mesh
-        receiveShadow
-        castShadow
-        geometry={nodes.mesh002_1.geometry}
-        material={materials.Seat_Side}
-        material-color={snap.items.Seat_Side}
-      />
-      <mesh
-        receiveShadow
-        castShadow
-        geometry={nodes.mesh002_2.geometry}
-        material={materials.Seat_Mid_Design}
-        material-color={snap.items.Seat_Mid_Design}
-      />
-      <mesh
-        receiveShadow
-        castShadow
-        geometry={nodes.mesh002_3.geometry}
-        material={materials.Stritch_front}
-        material-color={snap.items.Stritch_front}
-      />
-      <mesh
-        receiveShadow
-        castShadow
-        geometry={nodes.mesh002_4.geometry}
+        geometry={nodes.Circle010.geometry}
         material={materials.Stritch_Back}
         material-color={snap.items.Stritch_Back}
       />
       <mesh
         receiveShadow
         castShadow
-        geometry={nodes.mesh002_5.geometry}
+        geometry={nodes.Circle010_1.geometry}
+        material={materials.Seat_Main}
+        material-color={snap.items.Seat_Main}
+      />
+      <mesh
+        receiveShadow
+        castShadow
+        geometry={nodes.Circle010_2.geometry}
+        material={materials.Seat_Side}
+        material-color={snap.items.Seat_Side}
+      />
+      <mesh
+        receiveShadow
+        castShadow
+        geometry={nodes.Circle010_3.geometry}
+        material={materials.Seat_Mid_Design}
+        material-color={snap.items.Seat_Mid_Design}
+      />
+      <mesh
+        receiveShadow
+        castShadow
+        geometry={nodes.Circle010_4.geometry}
+        material={materials.Stritch_front}
+        material-color={snap.items.Stritch_front}
+      />
+      <mesh
+        receiveShadow
+        castShadow
+        geometry={nodes.Circle010_5.geometry}
         material={materials.Stritch_Mid_Main}
         material-color={snap.items.Stritch_Mid_Main}
       />
       <mesh
         receiveShadow
         castShadow
-        geometry={nodes.mesh002_6.geometry}
+        geometry={nodes.Circle010_6.geometry}
         material={materials.Stritch_mid_design}
         material-color={snap.items.Stritch_mid_design}
       />
       {/* <mesh receiveShadow castShadow geometry={nodes.shoe_7.geometry} material={materials.patch} material-color={snap.items.patch} /> */}
     </group>
-  )
+  );
 }
 
 function Picker() {
