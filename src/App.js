@@ -19,9 +19,26 @@ const state = proxy({
 });
 
 export default function App() {
+  const canvasRef = useRef(null);
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    requestAnimationFrame(() => {
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "seat.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  };
   return (
     <>
-      <Canvas shadows camera={{ position: [0, 0, 4], fov: 45 }}>
+      {/* download button */}
+      <button className="download-btn" onClick={handleDownload}>
+        Download
+      </button>
+      <Canvas ref={canvasRef} shadows camera={{ position: [0, 0, 4], fov: 45 }}>
         <ambientLight intensity={0.7} />
         <spotLight
           intensity={0.5}
@@ -146,14 +163,13 @@ function Picker() {
   const snap = useSnapshot(state)
   return (
     <>
-      <h1>{snap.current ? snap.current.split('_').join(' ') :'Seat'}</h1>
+      <h1>{snap.current ? snap.current.split("_").join(" ") : "Seat"}</h1>
       <div style={{ display: snap.current ? "block" : "none" }}>
         <HexColorPicker
           className="picker"
           color={snap.items[snap.current]}
           onChange={(color) => (state.items[snap.current] = color)}
         />
-
         <div className="side-elements" style={{ top: "8rem" }}>
           Seat Main
           <div

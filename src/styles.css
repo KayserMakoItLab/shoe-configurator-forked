@@ -54,3 +54,25 @@ h1 {
   gap: 8px;
   align-items: center;
 }
+
+.download-btn{
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2%;
+  background-color: #319795;
+  color: white;
+  border: 0px;
+  padding: 1rem 1.5rem;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: -2px 2px 2px #00000050;
+  transition: all 0.5s ease;
+  z-index: 50;
+}
+
+.download-btn:hover{
+  box-shadow:none;
+  opacity: 80%;
+}
